@@ -35,10 +35,8 @@ class Portfolio{
         let total = 0
         for(let i = 0; i < rateArray.length; i++){
             let rateOfChange = rateArray[i]
-            if (month != config.months.JANUARY) {
-                this.currentAmounts[i] += this.sip[i]
-            }
-            this.currentAmounts[i] += Math.floor((rateOfChange / 100) * this.currentAmounts[i])
+            this.currentAmounts[i] = this.addSIP(month, this.sip[i], this.currentAmounts[i])
+            this.currentAmounts[i] = this.multiplyChange(rateOfChange, this.currentAmounts[i])
             total += this.currentAmounts[i]
         }
         if (month == config.months.JUNE || month == config.months.DECEMBER){

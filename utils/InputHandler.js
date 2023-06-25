@@ -6,13 +6,20 @@ class InputHandler{
         this.inputData = input
     }
 
+    parser(input){
+        let inputValues = input.trim().split(' ');
+        let command = inputValues[0]
+        let valuesArray = inputValues.slice(1,inputValues.length)
+        return [command, valuesArray]
+    }
+
     createPortfolio(){
         // creates portfolio acc to commands from user input
         for (let i=0; i < this.inputData.length; i++){
+
             var month, portfolio, intArray;
-            var inputValues = inputData[i].trim().split(' ');
-            var command = inputValues[0]
-            var valuesArray = inputValues.slice(1,inputValues.length)
+            var [command, valuesArray] = this.parser(this.inputData[i])
+
             if (command == config.commands.Allocate){
                 intArray = valuesArray.map(str => parseInt(str));
                 portfolio = new Portfolio(intArray)   

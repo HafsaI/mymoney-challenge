@@ -1,0 +1,21 @@
+{
+  "name": "mymoney-challenge",
+  "version": "1.0.0",
+  "description": "sadapay-challenge",
+  "main": "geektrust.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node geektrust.js",
+    "test": "jest --verbose"
+  },
+  "keywords": [
+    "OOP",
+    "Jest"
+  ],
+  "author": "Hafsa",
+  "dependencies": {
+    "jest": "^29.5.0"
+  }
+}

@@ -1,4 +1,4 @@
-// const InputHandler = require('./utils/InputHandler')
+const InputHandler = require('./utils/InputHandler')
 const fs = require('fs')
 
 
@@ -13,7 +13,8 @@ else{
         inputData = fs.readFileSync(filePath, "utf8",{flag:'r'})
         if (inputData){
             inputData = inputData.toString().trim().split('\n');
-            // obj = new InputHandler(inputData)
+            obj = new InputHandler(inputData)
+            obj.createPortfolio()
         }
     } catch (error) {
         console.log(error.message);

@@ -9,22 +9,15 @@ if (!filePath) {
     );
 }
 else{
-
-    inputData = fs.readFileSync(filePath, "utf8",{flag:'r'})
+    try {
+        inputData = fs.readFileSync(filePath, "utf8",{flag:'r'})
         if (inputData){
             inputData = inputData.toString().trim().split('\n');
             obj = new InputHandler(inputData)
             obj.createPortfolio()
         }
-    // try {
-    //     inputData = fs.readFileSync(filePath, "utf8",{flag:'r'})
-    //     if (inputData){
-    //         inputData = inputData.toString().trim().split('\n');
-    //         obj = new InputHandler(inputData)
-    //         obj.createPortfolio()
-    //     }
-    // } 
-    // catch (error) {
-    //     console.log(error.message);
-    // }
+    } 
+    catch (error) {
+        console.log(error.message);
+    }
 }

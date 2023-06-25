@@ -1,12 +1,13 @@
 const Portfolio = require('./Portfolio')
 const config = require('../config');
-
-class InputHandler{    
+class InputHandler{
+    #inputData
     constructor(input){
-        this.inputData = input
+        this.#inputData = input
     }
 
     parser(input){
+        //parses each input command
         let inputValues = input.trim().split(' ');
         let command = inputValues[0]
         let valuesArray = inputValues.slice(1,inputValues.length)
@@ -15,11 +16,10 @@ class InputHandler{
 
     createPortfolio(){
         // creates portfolio acc to commands from user input
-        var result = []
-        for (let i=0; i < this.inputData.length; i++){
+        var result = [];
+        for (let i=0; i < this.#inputData.length; i++){
             var month, portfolio, intArray;
-            var [command, valuesArray] = this.parser(this.inputData[i])
-
+            var [command, valuesArray] = this.parser(this.#inputData[i])
             if (command == config.commands.Allocate){
                 intArray = valuesArray.map(str => parseInt(str));
                 portfolio = new Portfolio(intArray)   
@@ -29,18 +29,19 @@ class InputHandler{
                 portfolio.setSIP(intArray)
             }
             if (command == config.commands.Change){
-                month = valuesArray[valuesArray.length - 1]
+                month = valuesArray.slice(-1)[0]
                 let array = valuesArray.slice(0,-1).map(value => parseFloat(value.replace('%', '')));
                 portfolio.addChange(array, month)   
             }
             if (command == config.commands.Balance){
-                month = valuesArray[valuesArray.length - 1]
+                month = valuesArray.slice(-1)[0]
                 result.push(portfolio.getBalance(month))
-                console.log(portfolio.getBalance(month))  
+                console.log(portfolio.getBalance(month))
             }
             if (command == config.commands.Rebalance){
-                result.push(portfolio.getRebalance())
+                result.push(portfolio.getRebalance(month))
                 console.log(portfolio.getRebalance())
+                
             }
         }
         return result

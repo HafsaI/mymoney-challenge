@@ -22,6 +22,8 @@ const config = {
         NOVEMBER: 'NOVEMBER',
         DECEMBER: 'DECEMBER'
     }),
+    rebalance_month_1: 'JUNE',
+    rebalance_month_2: 'DECEMBER',
 }
 
 module.exports = config;

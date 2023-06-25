@@ -35,12 +35,14 @@ class InputHandler{
             }
             if (command == config.commands.Balance){
                 month = valuesArray.slice(-1)[0]
-                result.push(portfolio.getBalance(month))
-                console.log(portfolio.getBalance(month))
+                let balance = portfolio.getBalance(month)
+                result.push(balance)
+                console.log(balance)
             }
             if (command == config.commands.Rebalance){
-                result.push(portfolio.getRebalance(month))
-                console.log(portfolio.getRebalance())
+                let balance = portfolio.getRebalance()
+                result.push(balance)
+                console.log(balance)
                 
             }
         }

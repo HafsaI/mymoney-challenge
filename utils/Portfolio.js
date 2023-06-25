@@ -13,51 +13,51 @@ class Portfolio{
         this.#record = {}  
     }
 
-    assignWeights(initialArray){
+    assignWeights(initialAmounts){
         // sets desired weights for each asset from initial allocation
-        let total = 0;
         let weights = [];
-        let e;
-        initialArray.map(e => total += e)
-        for (let amount of initialArray){
+        let total = initialAmounts.reduce((x, y) => x + y, 0);
+        for (let amount of initialAmounts){
             weights.push(amount/total)
         }
         return weights
     }
     setSIP(sipArray){
-        // sets monthly payments for each asset 
+        // sets fixed amount for asset investments at monthly intervals 
         this.#sip = sipArray
     }
     addSIP(month, sip, current){
-        // add sip for the given month except Jan
+        // add the fixed amount from sip for the given month except Jan
         if (month != config.months.JANUARY) {
            return current + sip
         }
         return current
 
     }
-    multiplyChange(rateOfChange, current){
-        // calculate new amount after rate applied
-        return Math.floor((rateOfChange / 100) * current) + current
+    multiplyChange(rateOfChange, currentAmount){
+        // calculate new assets' amount after rate applied
+        return Math.floor((rateOfChange / 100) * currentAmount) + currentAmount
     }
     addChange(rateArray, month){
-        // calculate monthly assets' amounts
-        let total = 0
+        // apply monthly rate for a given month
+        let totalAmount = 0
         
         for(let i = 0; i < rateArray.length; i++){
             let rateOfChange = rateArray[i]
             this.#currentAmounts[i] = this.addSIP(month, this.#sip[i], this.#currentAmounts[i])
             this.#currentAmounts[i] = this.multiplyChange(rateOfChange, this.#currentAmounts[i])
-            total += this.#currentAmounts[i]
+            totalAmount += this.#currentAmounts[i]
         }
         // rebalance
         if (month == config.months.JUNE || month == config.months.DECEMBER){
-            this.#currentAmounts = this.doRebalance(total)
+            this.#currentAmounts = this.doRebalance(totalAmount)
         } 
         this.#record[month] =  [...this.#currentAmounts]
+
         return this.#currentAmounts
     }
     doRebalance(total){
+        // calculate rebalanced amount using desired weights
         let current = []
         for(let i = 0; i < this.#currentAmounts.length; i++){
             current[i] = Math.floor(this.#weights[i] * total)
@@ -82,7 +82,6 @@ class Portfolio{
             return rebalance_message
         }
     }
-
 }
 
 

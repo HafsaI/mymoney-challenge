@@ -2,9 +2,9 @@ const config = require('../config');
 
 class Portfolio{
     constructor(initialValues){
-        this.currentAmounts = initialValues
+        this.currentAmounts = [...initialValues]
         this.sip = []
-        this.weights = this.assignWeights(initialValues)
+        this.weights = this.assignWeights([...initialValues])
         this.record = {}  
     }
     assignWeights(initialArray){

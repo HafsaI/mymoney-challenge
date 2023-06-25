@@ -15,8 +15,8 @@ class InputHandler{
 
     createPortfolio(){
         // creates portfolio acc to commands from user input
+        var result = []
         for (let i=0; i < this.inputData.length; i++){
-
             var month, portfolio, intArray;
             var [command, valuesArray] = this.parser(this.inputData[i])
 
@@ -35,13 +35,15 @@ class InputHandler{
             }
             if (command == config.commands.Balance){
                 month = valuesArray[valuesArray.length - 1]
-                console.log(portfolio.getBalance(month))
+                result.push(portfolio.getBalance(month))
+                console.log(portfolio.getBalance(month))  
             }
             if (command == config.commands.Rebalance){
+                result.push(portfolio.getRebalance())
                 console.log(portfolio.getRebalance())
-                
             }
         }
+        return result
 
     }
 }

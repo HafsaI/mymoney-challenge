@@ -9,14 +9,22 @@ if (!filePath) {
     );
 }
 else{
-    try {
-        inputData = fs.readFileSync(filePath, "utf8",{flag:'r'})
+
+    inputData = fs.readFileSync(filePath, "utf8",{flag:'r'})
         if (inputData){
             inputData = inputData.toString().trim().split('\n');
             obj = new InputHandler(inputData)
             obj.createPortfolio()
         }
-    } catch (error) {
-        console.log(error.message);
-    }
+    // try {
+    //     inputData = fs.readFileSync(filePath, "utf8",{flag:'r'})
+    //     if (inputData){
+    //         inputData = inputData.toString().trim().split('\n');
+    //         obj = new InputHandler(inputData)
+    //         obj.createPortfolio()
+    //     }
+    // } 
+    // catch (error) {
+    //     console.log(error.message);
+    // }
 }

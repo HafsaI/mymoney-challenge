@@ -1,4 +1,4 @@
-const Portfolio = require('./Portfolio')
+const Portfolio = require('./Portfolio');
 const config = require('../config');
 class InputHandler{
     #inputData
@@ -20,6 +20,7 @@ class InputHandler{
         for (let i=0; i < this.#inputData.length; i++){
             var month, portfolio, intArray;
             var [command, valuesArray] = this.parser(this.#inputData[i])
+            
             if (command == config.commands.Allocate){
                 intArray = valuesArray.map(str => parseInt(str));
                 portfolio = new Portfolio(intArray)   
@@ -31,7 +32,7 @@ class InputHandler{
             if (command == config.commands.Change){
                 month = valuesArray.slice(-1)[0]
                 let array = valuesArray.slice(0,-1).map(value => parseFloat(value.replace('%', '')));
-                portfolio.addChange(array, month)   
+                portfolio.calculateMonthBalance(array, month)   
             }
             if (command == config.commands.Balance){
                 month = valuesArray.slice(-1)[0]
@@ -46,8 +47,8 @@ class InputHandler{
                 
             }
         }
-        return result
 
+        return result
     }
 }
 

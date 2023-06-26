@@ -1,12 +1,14 @@
 const config = require('../config');
 
 class Portfolio{
+
     #currentAmounts
     #sip
     #weights
     #record
+    
     constructor(initialValues){
-        // allocates initial amounts and sets weights accordingly
+        // allocate initial amounts and set desired weights accordingly
         this.#currentAmounts = [...initialValues]
         this.#sip = []
         this.#weights = this.assignWeights([...initialValues])
@@ -14,7 +16,7 @@ class Portfolio{
     }
 
     assignWeights(initialAmounts){
-        // sets desired weights for each asset from initial allocation
+        // set desired weights for each asset from initial amount allocated
         let weights = [];
         let total = initialAmounts.reduce((x, y) => x + y, 0);
         for (let amount of initialAmounts){
@@ -22,26 +24,30 @@ class Portfolio{
         }
         return weights
     }
+
     setSIP(sipArray){
-        // sets fixed amount for asset investments at monthly intervals 
+        // set fixed amount for asset investments at monthly intervals 
         this.#sip = sipArray
     }
+
     addSIP(month, sip, current){
-        // add the fixed amount from sip for the given month except Jan
+        // add the fixed amount (sip) to the current amount (except Jan)
         if (month != config.months.JANUARY) {
            return current + sip
         }
         return current
-
     }
+    
     multiplyChange(rateOfChange, currentAmount){
-        // calculate new assets' amount after rate applied
+        // calculate new asset amount after monthly rate applied
         return Math.floor((rateOfChange / 100) * currentAmount) + currentAmount
     }
-    addChange(rateArray, month){
-        // apply monthly rate for a given month
+
+    calculateMonthBalance(rateArray, month){
+        // calculate monthly balance for a given month
         let totalAmount = 0
         
+        // add sip + change
         for(let i = 0; i < rateArray.length; i++){
             let rateOfChange = rateArray[i]
             this.#currentAmounts[i] = this.addSIP(month, this.#sip[i], this.#currentAmounts[i])
@@ -56,32 +62,35 @@ class Portfolio{
 
         return this.#currentAmounts
     }
-    doRebalance(total){
-        // calculate rebalanced amount using desired weights
-        let current = []
+
+    doRebalance(monthTotal){
+        // calculate rebalanced amount using set weights
+        let rebalanced = []
         for(let i = 0; i < this.#currentAmounts.length; i++){
-            current[i] = Math.floor(this.#weights[i] * total)
+            rebalanced[i] = Math.floor(this.#weights[i] * monthTotal)
         }
-        return current
+        return rebalanced
     }
+
     getBalance(month){
-        // returns month's balance
+        // return month's balance
         return this.#record[month].join(' ') 
     }
+
     getRebalance(){
-        // returns rebalanced amount if june/dec exists in records
+        // return rebalanced amount if june/dec exist in records
         let rebalance_message = "CANNOT_REBALANCE"
-        let no_of_months = 12
-        if (Object.keys(this.#record).length >= no_of_months){
+        if (Object.keys(this.#record).length >= config.no_of_months){
             return this.#record[config.rebalance_month_2].join(' ')
         }
-        else if (Object.keys(this.#record).length >= no_of_months / 2){
+        else if (Object.keys(this.#record).length >= config.no_of_months / 2){
             return this.#record[config.rebalance_month_1].join(' ') 
         }
         else{
             return rebalance_message
         }
     }
+
 }
 
 

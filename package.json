@@ -5,7 +5,9 @@
   "main": "geektrust.js",
   "scripts": {
     "start": "node geektrust.js",
-    "test": "jest --verbose"
+    "lint": "eslint .",
+    "test": "jest --verbose",
+    "format": "prettier --write ."
   },
   "keywords": [
     "OOP",
@@ -14,5 +16,10 @@
   "author": "Hafsa",
   "dependencies": {
     "jest": "^29.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.43.0",
+    "eslint-config-prettier": "^8.8.0",
+    "prettier": "2.8.8"
   }
 }

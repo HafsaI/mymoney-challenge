@@ -79,7 +79,7 @@ class Portfolio{
 
     getRebalance(){
         // return rebalanced amount if june/dec exist in records
-        let rebalance_message = "CANNOT_REBALANCE"
+        let rebalance_message = 'CANNOT_REBALANCE'
         if (Object.keys(this.#record).length >= config.no_of_months){
             return this.#record[config.rebalance_month_2].join(' ')
         }

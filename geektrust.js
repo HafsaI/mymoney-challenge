@@ -9,7 +9,7 @@ if (!filePath) {
 }
 else{
     try {
-        var inputData = fs.readFileSync(filePath, "utf8",{flag:'r'})
+        var inputData = fs.readFileSync(filePath, 'utf8')
         if (inputData){
             inputData = inputData.toString().trim().split('\n');
             let handler = new InputHandler(inputData)

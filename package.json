@@ -6,8 +6,7 @@
   "scripts": {
     "start": "node geektrust.js",
     "lint": "eslint .",
-    "test": "jest --verbose",
-    "format": "prettier --write ."
+    "test": "jest --verbose"  
   },
   "keywords": [
     "OOP",

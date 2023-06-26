@@ -1,21 +1,21 @@
-const InputHandler = require("../utils/InputHandler");
+const InputHandler = require('../utils/InputHandler');
 
 
-describe("Parser Function", () => {
+describe('Parser Function', () => {
   const handler = new InputHandler();
   let output1 = [ 'ALLOCATE', [ '8000', '6000', '3500' ] ]
   let output2 = [ 'CHANGE', [ '4.00%', '10.00%', '2.00%', 'JANUARY' ] ]
 
-  it("it should split allocate command correctly", () => {
-    expect(handler.parser("ALLOCATE 8000 6000 3500")).toEqual(output1);
+  it('it should split allocate command correctly', () => {
+    expect(handler.parser('ALLOCATE 8000 6000 3500')).toEqual(output1);
   });
-  it("it should split change command correctly", () => {
-    expect(handler.parser("CHANGE 4.00% 10.00% 2.00% JANUARY")).toEqual(output2);
+  it('it should split change command correctly', () => {
+    expect(handler.parser('CHANGE 4.00% 10.00% 2.00% JANUARY')).toEqual(output2);
   });
 
 });
 
-describe("Portfolio Function", () => {
+describe('Portfolio Function', () => {
   let input = [
     'ALLOCATE 6000 3000 1000\r',
     'SIP 2000 1000 500\r',
@@ -28,11 +28,11 @@ describe("Portfolio Function", () => {
     'BALANCE MARCH\r',
     'REBALANCE'
   ]
-  let outputResult = ["10593 7897 2272", "23619 11809 3936"]
+  let outputResult = ['10593 7897 2272', '23619 11809 3936']
   const handler = new InputHandler(input);
   
 
-  it("it should create a portfolio and return final printing results", () => {
+  it('it should create a portfolio and return final printing results', () => {
     expect(handler.createPortfolio()).toEqual(outputResult);
   });
 

@@ -6,45 +6,39 @@ class InputHandler{
         this.#inputData = input
     }
 
+    /** Parses each input command */
     parser(input){
-        //parses each input command
-        let inputValues = input.trim().split(' ');
-        let command = inputValues[0]
-        let valuesArray = inputValues.slice(1,inputValues.length)
+        const [command, ...valuesArray] = input.trim().split(' ')
         return [command, valuesArray]
     }
 
+    /** Creates portfolio acc to user input commands */
     createPortfolio(){
-        // creates portfolio acc to commands from user input
-        var result = [];
+        var result = []
         for (let i=0; i < this.#inputData.length; i++){
-            var month, portfolio, intArray;
-            var [command, valuesArray] = this.parser(this.#inputData[i])
+            var month, portfolio, intArray
+            var [command, valuesArray] = this.parser(this.#inputData[i])            
             
-            if (command == config.commands.Allocate){
-                intArray = valuesArray.map(str => parseInt(str));
-                portfolio = new Portfolio(intArray)   
-            }
-            if (command == config.commands.Sip){
-                intArray = valuesArray.map(str => parseInt(str));
+            if (command === config.commands.Allocate) {
+                intArray = valuesArray.map(str => parseInt(str))
+                portfolio = new Portfolio(intArray)
+            } 
+            else if (command === config.commands.Sip) {
+                intArray = valuesArray.map(str => parseInt(str))
                 portfolio.setSIP(intArray)
-            }
-            if (command == config.commands.Change){
+            } 
+            else if (command === config.commands.Change) {
+                // removes % sign from the rates for calculation purposes
+                const array = valuesArray.slice(0, -1).map(value => parseFloat(value.replace('%', '')))
                 month = valuesArray.slice(-1)[0]
-                let array = valuesArray.slice(0,-1).map(value => parseFloat(value.replace('%', '')));
-                portfolio.calculateMonthBalance(array, month)   
-            }
-            if (command == config.commands.Balance){
+                portfolio.calculateMonthBalance(array, month)
+            } 
+            else if (command === config.commands.Balance) {
                 month = valuesArray.slice(-1)[0]
-                let balance = portfolio.getBalance(month)
-                result.push(balance)
-                console.log(balance)
-            }
-            if (command == config.commands.Rebalance){
-                let balance = portfolio.getRebalance()
-                result.push(balance)
-                console.log(balance)
-                
+                result.push(portfolio.getBalance(month))
+            } 
+            else if (command === config.commands.Rebalance) {
+                result.push(portfolio.getRebalance())
             }
         }
 

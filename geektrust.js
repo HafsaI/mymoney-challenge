@@ -13,7 +13,7 @@ else{
         if (inputData){
             inputData = inputData.toString().trim().split('\n');
             let handler = new InputHandler(inputData)
-            handler.createPortfolio()
+            handler.createPortfolio().map( result => console.log(result))
         }
     } 
     catch (error) {

@@ -7,46 +7,43 @@ class Portfolio{
     #weights
     #record
     
+    /** Allocates initial amounts and sets desired weights */
     constructor(initialValues){
-        // allocate initial amounts and set desired weights accordingly
         this.#currentAmounts = [...initialValues]
-        this.#sip = []
+        this.#sip = new Array(initialValues.length).fill(0)
         this.#weights = this.assignWeights([...initialValues])
         this.#record = {}  
     }
 
+    /** Sets desired weights for each asset from given asset amounts */
     assignWeights(initialAmounts){
-        // set desired weights for each asset from initial amount allocated
-        let weights = [];
-        let total = initialAmounts.reduce((x, y) => x + y, 0);
-        for (let amount of initialAmounts){
-            weights.push(amount/total)
-        }
+        let total = initialAmounts.reduce((x, y) => x + y)
+        let weights = initialAmounts.map(i => i / total)
         return weights
     }
 
+    /** Set fixed amount for asset investments at monthly intervals  */
     setSIP(sipArray){
-        // set fixed amount for asset investments at monthly intervals 
         this.#sip = sipArray
     }
 
-    addSIP(month, sip, current){
-        // add the fixed amount (sip) to the current amount (except Jan)
-        if (month != config.months.JANUARY) {
-           return current + sip
+    /** Add the fixed amount (sip) to the current month amount (except Jan) */
+    addSIP(month, sip, currentAmount){
+        if (month !== config.months.JANUARY) {
+           return currentAmount + sip
         }
-        return current
+        return currentAmount
     }
     
+    /** Calculate new asset amount after monthly rate applied */
     multiplyChange(rateOfChange, currentAmount){
-        // calculate new asset amount after monthly rate applied
-        return Math.floor((rateOfChange / 100) * currentAmount) + currentAmount
+        let percent = 100
+        return Math.floor((rateOfChange / percent) * currentAmount) + currentAmount
     }
 
+    /**  Calculate monthly balance for a given month */
     calculateMonthBalance(rateArray, month){
-        // calculate monthly balance for a given month
         let totalAmount = 0
-        
         // add sip + change
         for(let i = 0; i < rateArray.length; i++){
             let rateOfChange = rateArray[i]
@@ -55,7 +52,7 @@ class Portfolio{
             totalAmount += this.#currentAmounts[i]
         }
         // rebalance
-        if (month == config.months.JUNE || month == config.months.DECEMBER){
+        if (month === config.months.JUNE || month === config.months.DECEMBER){
             this.#currentAmounts = this.doRebalance(totalAmount)
         } 
         this.#record[month] =  [...this.#currentAmounts]
@@ -63,8 +60,8 @@ class Portfolio{
         return this.#currentAmounts
     }
 
+    /** Calculate rebalanced amount using set weights */
     doRebalance(monthTotal){
-        // calculate rebalanced amount using set weights
         let rebalanced = []
         for(let i = 0; i < this.#currentAmounts.length; i++){
             rebalanced[i] = Math.floor(this.#weights[i] * monthTotal)
@@ -72,22 +69,22 @@ class Portfolio{
         return rebalanced
     }
 
+    /** Return month's balance */
     getBalance(month){
-        // return month's balance
         return this.#record[month].join(' ') 
     }
 
+    /** Return rebalanced amount if june/dec exist in records */
     getRebalance(){
-        // return rebalanced amount if june/dec exist in records
-        let rebalance_message = 'CANNOT_REBALANCE'
-        if (Object.keys(this.#record).length >= config.no_of_months){
+        let size = Object.keys(this.#record).length 
+        if (size >= config.no_of_months){
             return this.#record[config.rebalance_month_2].join(' ')
         }
-        else if (Object.keys(this.#record).length >= config.no_of_months / 2){
+        else if (size >= config.no_of_months / 2){
             return this.#record[config.rebalance_month_1].join(' ') 
         }
         else{
-            return rebalance_message
+            return config.rebalance_message
         }
     }
 

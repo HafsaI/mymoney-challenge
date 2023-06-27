@@ -22,9 +22,11 @@ const config = {
         NOVEMBER: 'NOVEMBER',
         DECEMBER: 'DECEMBER'
     }),
+    
     rebalance_month_1: 'JUNE',
     rebalance_month_2: 'DECEMBER',
     no_of_months: 12,
+    rebalance_message: 'CANNOT_REBALANCE',
 }
 
 module.exports = config;

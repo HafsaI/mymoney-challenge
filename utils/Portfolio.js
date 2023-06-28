@@ -11,14 +11,14 @@ class Portfolio{
     constructor(initialValues){
         this.#currentAmounts = [...initialValues]
         this.#sip = new Array(initialValues.length).fill(0)
-        this.#weights = this.assignWeights([...initialValues])
+        this.#weights = this.assignWeights(initialValues)
         this.#record = {}  
     }
 
     /** Sets desired weights for each asset from given asset amounts */
     assignWeights(initialAmounts){
-        let total = initialAmounts.reduce((x, y) => x + y)
-        let weights = initialAmounts.map(i => i / total)
+        const total = initialAmounts.reduce((x, y) => x + y)
+        const weights = initialAmounts.map(i => i / total)
         return weights
     }
 
@@ -37,7 +37,7 @@ class Portfolio{
     
     /** Calculate new asset amount after monthly rate applied */
     multiplyChange(rateOfChange, currentAmount){
-        let percent = 100
+        const percent = 100
         return Math.floor((rateOfChange / percent) * currentAmount) + currentAmount
     }
 
@@ -76,7 +76,7 @@ class Portfolio{
 
     /** Return rebalanced amount if june/dec exist in records */
     getRebalance(){
-        let size = Object.keys(this.#record).length 
+        const size = Object.keys(this.#record).length 
         if (size >= config.no_of_months){
             return this.#record[config.rebalance_month_2].join(' ')
         }

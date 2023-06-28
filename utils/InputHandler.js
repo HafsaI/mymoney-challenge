@@ -1,6 +1,7 @@
 const Portfolio = require('./Portfolio');
 const config = require('../config');
 class InputHandler{
+
     #inputData
     constructor(input){
         this.#inputData = input
@@ -14,10 +15,10 @@ class InputHandler{
 
     /** Creates portfolio acc to user input commands */
     createPortfolio(){
-        var result = []
+        let result = []
+        let month, intArray, portfolio
         for (let i=0; i < this.#inputData.length; i++){
-            var month, portfolio, intArray
-            var [command, valuesArray] = this.parser(this.#inputData[i])            
+            let [command, valuesArray] = this.parser(this.#inputData[i])  
             
             if (command === config.commands.Allocate) {
                 intArray = valuesArray.map(str => parseInt(str))

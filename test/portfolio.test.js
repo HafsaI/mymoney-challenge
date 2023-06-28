@@ -1,12 +1,12 @@
 const Portfolio = require('../utils/Portfolio');
 
 describe('Portfolio Basic Functionality', () => {
-  let testInitialValues = [6000, 3000, 1000];
-  let outputWeights = [0.6,0.3,0.1];
-  let testSipArray = [2000,1000, 500];
+  const testInitialValues = [6000, 3000, 1000];
+  const outputWeights = [0.6,0.3,0.1];
+  const testSipArray = [2000,1000, 500];
   const portfolio = new Portfolio(testInitialValues);
 
-  it('it should set weights', () => {
+  it('it should assign weights', () => {
     expect(portfolio.assignWeights(testInitialValues).map(e => parseFloat(e.toFixed(1)))).toEqual(outputWeights);
   });
 
@@ -18,18 +18,19 @@ describe('Portfolio Basic Functionality', () => {
     expect(portfolio.addSIP('JANUARY', 2000, 6000)).toEqual(6000);
   });
 
-  it('it should add sip to value provided March', () => {
+  it('it should add sip to value provided for March', () => {
     expect(portfolio.addSIP('MARCH', 1000, 3300)).toEqual(4300);
   });
 
-  it('it should multiply rate with current given amount and add current to it', () => {
+  it('it should multiply with current given amount and add it back', () => {
     expect(portfolio.multiplyChange(21.5, 1000)).toEqual(1215);
   });
+
 });
 
 
 describe('Portfolio Functions', () => {
-  let testInitialValues = [6000, 3000, 1000];
+  const testInitialValues = [6000, 3000, 1000];
   const portfolio = new Portfolio(testInitialValues);
   portfolio.setSIP([2000,1000, 500]);
   portfolio.calculateMonthBalance([ 4.00, 10.00, 2.00 ] ,'JANUARY' );

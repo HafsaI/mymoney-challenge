@@ -4,7 +4,7 @@ const fs = require('fs')
 const filePath = process.argv[2]
 if (!filePath) {
     console.log(
-      'No input file path provided. Usage: node index.js <input-file-path>'
+      'No input file path provided. Usage: node geektrust.js <input-file-path>'
     );
 }
 else{

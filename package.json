@@ -1,7 +1,7 @@
 {
   "name": "mymoney-challenge",
   "version": "1.0.0",
-  "description": "sadapay-challenge",
+  "description": "sadapay technical assessment",
   "main": "geektrust.js",
   "scripts": {
     "start": "node geektrust.js",
@@ -10,9 +10,10 @@
   },
   "keywords": [
     "OOP",
-    "Jest"
+    "Jest",
+    "Geetrust"
   ],
-  "author": "Hafsa",
+  "author": "Hafsa Irfan",
   "devDependencies": {
     "jest": "^29.5.0",
     "eslint": "^8.43.0" 
